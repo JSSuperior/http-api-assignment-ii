@@ -50,6 +50,7 @@ const addUser = (request, response) => {
     let status = 400;
 
     // If invalid post request, return early
+    console.log(request.body);
     const { name, age } = request.body;
     if(!name || !age) {
         responseJSON.id = 'addUserMissingParams';

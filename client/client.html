@@ -5,7 +5,7 @@
   <link rel="stylesheet" type="text/css" href="/style.css">
   
   <script>
-    const handleResponse = async (response) => {
+    const handleResponse = async (response, parseResponse) => {
       // Grab content element
       const content = document.querySelector('#content');
 
@@ -31,13 +31,17 @@
           break;
       }
 
-      // If there is a body, display it
-      // unsure if this accounts for head responses
-      const responseObj = await response.json();
 
-      // if there is 
-      // might need to tweak, unsure if this fully accounts for head responses
-      if(responseObj.message){
+      // troubles parsing incoming json accordingly
+      if(parseResponse === 'get') {
+        let responseObj = await response.json();
+        let jsonString = JSON.stringify(obj);
+
+        content.innerHTML += `<p>${jsonString}</p>`;
+      }
+      else if (parseResponse === 'post')
+      {
+        let responseObj = await response.json();
         content.innerHTML += `<p>${responseObj.message}</p>`;
       }
     };
@@ -55,7 +59,8 @@
         },
       });
 
-      handleResponse(response);
+      // need to account for header here or not
+      handleResponse(response, method);
     };
 
     const sendPost = async (nameForm) => {
@@ -64,8 +69,8 @@
       const method = nameForm.getAttribute('method');
 
       // Grab name and age values
-      const name = nameForm.querySelector('nameField').value;
-      const age = nameForm.querySelector('ageField').value;
+      const name = nameForm.querySelector('#nameField').value;
+      const age = nameForm.querySelector('#ageField').value;
 
       // Assemble data into json format
       let formData = JSON.stringify({name, age});
@@ -81,7 +86,7 @@
         body: formData,
       });
 
-      handleResponse(response);
+      handleResponse(response, method);
     };
 
     const init = () => {
