@@ -12,10 +12,30 @@ const onRequest = (request, response) => {
     const protocol = request.connection.encrypted ? 'https' : 'http';
     const parsedUrl = new URL(request.url, `${protocol}://${request.headers.host}`);
 
+    if(request.method === 'POST')
+    {
+
+    }
+    else
+    {
+        
+    }
+
     if(urlStruct[parsedUrl.pathname])
     {
         return urlStruct[parsedUrl.pathname](request, response);
     }
+
+};
+
+const handlePost = (request, response, parsedUrl) => {
+    if(parsedUrl.pathname === '/addUser')
+    {
+        parseBody()
+    }
+};
+
+const parseBody = (request, response, handler) => {
 
 };
 
