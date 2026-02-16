@@ -1,13 +1,16 @@
+// Dependencies
 const fs = require('fs');
 const client = fs.readFileSync(`${__dirname}/../client/client.html`);
 const css = fs.readFileSync(`${__dirname}/../client/style.css`);
 
+// Returns client html
 const getClient = (request, response) => {
     response.writeHead(200, { 'Content-Type': 'text/html' });
     response.write(client);
     response.end();
 };
 
+// Returns client css
 const getCss = (request, response) => {
     response.writeHead(200, { 'Content-Type': 'text/css' });
     response.write(css);

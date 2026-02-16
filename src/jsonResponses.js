@@ -11,7 +11,7 @@ const respond = (request, response, status, object) => {
     });
 
     // If request wasn't a head request or user wasn't updating existing data, write body
-    if(request.method !== 'HEAD' || status !== 204) {
+    if (request.method !== 'HEAD' || status !== 204) {
         response.write(content);
     }
 
@@ -50,16 +50,15 @@ const addUser = (request, response) => {
     let status = 400;
 
     // If invalid post request, return early
-    console.log(request.body);
     const { name, age } = request.body;
-    if(!name || !age) {
+    if (!name || !age) {
         responseJSON.id = 'addUserMissingParams';
         return respond(request, response, status, responseJSON);
     }
 
     // If new user, create new user profile and update status
     status = 204;
-    if(!users[name]) {
+    if (!users[name]) {
         status = 201;
         users[name] = {
             name: name,
@@ -70,7 +69,7 @@ const addUser = (request, response) => {
     users[name].age = age;
 
     // If new user created, send back success message, otherwise respond normally
-    if(status === 201) {
+    if (status === 201) {
         responseJSON.message = 'Created Successfully';
         return respond(request, response, status, responseJSON);
     }
